@@ -5,4 +5,4 @@ const server = createServer(serverOnRequest);
 const port: number = getServerPort();
 
 server.on("error", (err) => console.error(`server error; ${err.stack}`));
-server.listen(port, () => console.log(`http://localhost:${port}`));
+server.listen(port);
