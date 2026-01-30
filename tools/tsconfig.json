@@ -1,5 +1,0 @@
-// TypeScript config for all tools.
-{
-  "extends": "./tsconfig.base.jsonc",
-  "compilerOptions": { "types": ["node"] }
-}
