@@ -13,9 +13,6 @@
       }
     }
   },
-  "media": {
-    "dir": "assets"
-  },
   "server": {
     "dir": "dist/server",
     "entry": "index.cjs"
@@ -33,5 +30,9 @@
   },
   "triggers": {
     "onAppInstall": "/internal/on-app-install"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build"
   }
 }

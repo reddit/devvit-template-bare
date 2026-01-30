@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.base.jsonc",
+  "compilerOptions": {
+    "outDir": "../dist/types/server",
+    "tsBuildInfoFile": "../dist/types/server/tsconfig.tsbuildinfo",
+    "customConditions": ["server"],
+    "types": ["node"],
+    "rootDir": ".."
+  },
+  "include": ["../src/server/**/*", "../src/shared/**/*"],
+  "exclude": ["../dist"]
+}

@@ -5,28 +5,21 @@
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "build:client": "cd src/client && vite build",
-    "build:server": "cd src/server && vite build",
-    "build": "npm run build:client && npm run build:server",
+    "build": "vite build",
     "deploy": "npm run build && devvit upload",
-    "dev": "concurrently -k -p \"[{name}]\" -n \"CLIENT,SERVER,DEVVIT\" -c \"blue,green,magenta\" \"npm run dev:client\" \"npm run dev:server\" \"npm run dev:devvit\"",
-    "dev:client": "cd src/client && vite build --watch",
-    "dev:devvit": "dotenv -e .env -- devvit playtest",
-    "dev:server": "cd src/server && vite build --watch",
+    "dev": "devvit playtest",
     "login": "devvit login",
     "launch": "npm run build && npm run deploy && devvit publish",
     "type-check": "tsc --build"
   },
   "dependencies": {
-    "@devvit/web": "0.12.3",
-    "devvit": "0.12.3",
-    "express": "5.1.0"
+    "@devvit/start": "0.12.11-next-2026-01-30-17-09-49-e9c512a0d.0",
+    "@devvit/web": "0.12.11-next-2026-01-30-17-09-49-e9c512a0d.0",
+    "devvit": "0.12.11-next-2026-01-30-17-09-49-e9c512a0d.0"
   },
   "devDependencies": {
-    "@types/express": "5.0.1",
-    "concurrently": "9.1.2",
-    "dotenv-cli": "8.0.0",
-    "typescript": "5.8.2",
-    "vite": "6.2.4"
+    "@types/node": "22.12.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.1"
   }
 }

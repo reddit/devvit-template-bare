@@ -3,7 +3,6 @@
 A starter to build web applications on Reddit's developer platform
 
 - [Devvit](https://developers.reddit.com/): A way to build and deploy immersive games on Reddit
-- [Express](https://expressjs.com/): For backend logic
 - [Typescript](https://www.typescriptlang.org/): For type safety
 
 ## Getting Started

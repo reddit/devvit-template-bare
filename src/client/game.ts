@@ -1,18 +1,19 @@
 import {
-  IncrementResponse,
-  DecrementResponse,
-  InitResponse,
-} from "../../shared/types/api";
+  ApiEndpoint,
+  type DecrementResponse,
+  type IncrementResponse,
+  type InitResponse,
+} from "../shared/api.ts";
 import { navigateTo } from "@devvit/web/client";
 
 const counterValueElement = document.getElementById(
-  "counter-value"
+  "counter-value",
 ) as HTMLSpanElement;
 const incrementButton = document.getElementById(
-  "increment-button"
+  "increment-button",
 ) as HTMLButtonElement;
 const decrementButton = document.getElementById(
-  "decrement-button"
+  "decrement-button",
 ) as HTMLButtonElement;
 
 const docsLink = document.getElementById("docs-link") as HTMLDivElement;
@@ -37,7 +38,7 @@ let currentPostId: string | null = null;
 
 async function fetchInitialCount() {
   try {
-    const response = await fetch("/api/init");
+    const response = await fetch(ApiEndpoint.Init);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -47,7 +48,7 @@ async function fetchInitialCount() {
       currentPostId = data.postId; // Store postId for later use
       titleElement.textContent = `Hey ${data.username} 👋`;
     } else {
-      console.error("Invalid response type from /api/init", data);
+      console.error(`Invalid response type from ${ApiEndpoint.Init}`, data);
       counterValueElement.textContent = "Error";
     }
   } catch (error) {
@@ -64,15 +65,18 @@ async function updateCounter(action: "increment" | "decrement") {
   }
 
   try {
-    const response = await fetch(`/api/${action}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      action === "increment" ? ApiEndpoint.Increment : ApiEndpoint.Decrement,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // The body can be an empty JSON object or include the postId if your backend expects it,
+        // but this server uses the request context to resolve the post ID.
+        body: JSON.stringify({}),
       },
-      // The body can be an empty JSON object or include the postId if your backend expects it,
-      // but based on your server code, postId is taken from req.devvit.
-      body: JSON.stringify({}),
-    });
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
