@@ -1,12 +1,18 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { context, reddit, redis } from "@devvit/web/server";
-import type { PartialJsonValue, UiResponse } from "@devvit/web/shared";
+import type {
+  PartialJsonValue,
+  TriggerResponse,
+  UiResponse,
+} from "@devvit/web/shared";
 import {
   ApiEndpoint,
   type DecrementResponse,
+  type IncrementRequest,
   type IncrementResponse,
   type InitResponse,
 } from "../shared/api.ts";
+import { once } from "node:events";
 
 export async function serverOnRequest(
   req: IncomingMessage,
@@ -25,23 +31,32 @@ async function onRequest(
   req: IncomingMessage,
   rsp: ServerResponse,
 ): Promise<void> {
-  const path = req.url?.split("?")[0] ?? "";
+  const endpoint = req.url?.slice(1) as ApiEndpoint | undefined;
+
+  if (!endpoint) {
+    writeJSON<ErrorResponse>(404, { error: "not found", status: 404 }, rsp);
+    return;
+  }
 
   let body: ApiResponse | UiResponse | ErrorResponse;
-  switch (path) {
+  switch (endpoint) {
     case ApiEndpoint.Init:
       body = await onInit();
       break;
     case ApiEndpoint.Increment:
-      body = await onIncrement();
+      body = await onIncrement(req);
       break;
     case ApiEndpoint.Decrement:
       body = await onDecrement();
       break;
-    case "/internal/menu/post-create":
+    case ApiEndpoint.OnPostCreate:
       body = await onMenuNewPost();
       break;
+    case ApiEndpoint.OnAppInstall:
+      body = await onAppInstall();
+      break;
     default:
+      endpoint satisfies never;
       body = { error: "not found", status: 404 };
       break;
   }
@@ -78,9 +93,13 @@ async function onInit(): Promise<InitResponse> {
   };
 }
 
-async function onIncrement(): Promise<IncrementResponse> {
+async function onIncrement(req: IncomingMessage): Promise<IncrementResponse> {
   const postId = getPostId();
-  const count = Number(await redis.incrBy(getPostCountKey(postId), 1));
+  const { amount } = await readJSON<IncrementRequest>(req).catch(() => ({
+    amount: 1,
+  }));
+  const incrementBy = Number.isFinite(amount) ? amount : 1;
+  const count = await redis.incrBy(getPostCountKey(postId), incrementBy);
   return {
     type: "increment",
     postId,
@@ -106,6 +125,14 @@ async function onMenuNewPost(): Promise<UiResponse> {
   };
 }
 
+async function onAppInstall(): Promise<TriggerResponse> {
+  await reddit.submitCustomPost({
+    title: "<% name %>",
+  });
+
+  return {};
+}
+
 function writeJSON<T extends PartialJsonValue>(
   status: number,
   json: Readonly<T>,
@@ -118,4 +145,11 @@ function writeJSON<T extends PartialJsonValue>(
     "Content-Type": "application/json",
   });
   rsp.end(body);
+}
+
+async function readJSON<T>(req: IncomingMessage): Promise<T> {
+  const chunks: Uint8Array[] = [];
+  req.on("data", (chunk) => chunks.push(chunk));
+  await once(req, "end");
+  return JSON.parse(`${Buffer.concat(chunks)}`);
 }

@@ -1,12 +1,16 @@
 {
-  "extends": "./tsconfig.base.jsonc",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../dist/types/server",
     "tsBuildInfoFile": "../dist/types/server/tsconfig.tsbuildinfo",
     "customConditions": ["server"],
     "types": ["node"],
-    "rootDir": ".."
+    "rootDir": "../src/server"
   },
-  "include": ["../src/server/**/*", "../src/shared/**/*"],
-  "exclude": ["../dist"]
+  "include": ["../src/server/**/*"],
+  "references": [
+    {
+      "path": "./tsconfig.shared.json"
+    }
+  ]
 }

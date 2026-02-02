@@ -4,7 +4,7 @@ const docsLink = document.getElementById("docs-link") as HTMLDivElement;
 const playtestLink = document.getElementById("playtest-link") as HTMLDivElement;
 const discordLink = document.getElementById("discord-link") as HTMLDivElement;
 const startButton = document.getElementById(
-  "start-button"
+  "start-button",
 ) as HTMLButtonElement;
 
 startButton.addEventListener("click", (e) => {

@@ -1,13 +1,17 @@
 {
-  "extends": "./tsconfig.base.jsonc",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../dist/types/client",
     "lib": ["DOM", "ES2023"],
     "tsBuildInfoFile": "../dist/types/client/tsconfig.tsbuildinfo",
     "customConditions": ["browser"],
-    "rootDir": ".."
+    "rootDir": "../src/client"
   },
-  "include": ["../src/client/**/*", "../src/shared/**/*"],
-  "exclude": ["../src/server/**/*", "../dist"],
-  "references": []
+  "include": ["../src/client/**/*"],
+  "exclude": ["../src/server/**/*"],
+  "references": [
+    {
+      "path": "./tsconfig.shared.json"
+    }
+  ]
 }

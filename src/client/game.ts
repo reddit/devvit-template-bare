@@ -1,6 +1,7 @@
 import {
   ApiEndpoint,
   type DecrementResponse,
+  type IncrementRequest,
   type IncrementResponse,
   type InitResponse,
 } from "../shared/api.ts";
@@ -35,6 +36,7 @@ discordLink.addEventListener("click", () => {
 const titleElement = document.getElementById("title") as HTMLHeadingElement;
 
 let currentPostId: string | null = null;
+const incrementAmount = 1;
 
 async function fetchInitialCount() {
   try {
@@ -57,13 +59,18 @@ async function fetchInitialCount() {
   }
 }
 
-async function updateCounter(action: "increment" | "decrement") {
+async function updateCounter(action: "increment" | "decrement", amount = 1) {
   if (!currentPostId) {
     console.error("Cannot update counter: postId is not initialized.");
     // Optionally, you could try to re-initialize or show an error to the user.
     return;
   }
 
+  const incrementBody: IncrementRequest = { amount };
+  const body =
+    action === "increment"
+      ? JSON.stringify(incrementBody)
+      : JSON.stringify({});
   try {
     const response = await fetch(
       action === "increment" ? ApiEndpoint.Increment : ApiEndpoint.Decrement,
@@ -72,9 +79,8 @@ async function updateCounter(action: "increment" | "decrement") {
         headers: {
           "Content-Type": "application/json",
         },
-        // The body can be an empty JSON object or include the postId if your backend expects it,
-        // but this server uses the request context to resolve the post ID.
-        body: JSON.stringify({}),
+        // The server uses request context for post ID; increment reads amount from the body.
+        body,
       },
     );
     if (!response.ok) {
@@ -90,7 +96,9 @@ async function updateCounter(action: "increment" | "decrement") {
   }
 }
 
-incrementButton.addEventListener("click", () => updateCounter("increment"));
+incrementButton.addEventListener("click", () =>
+  updateCounter("increment", incrementAmount),
+);
 decrementButton.addEventListener("click", () => updateCounter("decrement"));
 
 // Fetch the initial count when the page loads

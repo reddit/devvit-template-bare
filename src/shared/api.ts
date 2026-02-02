@@ -11,6 +11,10 @@ export type IncrementResponse = {
   count: number;
 };
 
+export type IncrementRequest = {
+  amount: number;
+};
+
 export type DecrementResponse = {
   type: "decrement";
   postId: string;
@@ -21,6 +25,8 @@ export const ApiEndpoint = {
   Init: "/api/init",
   Increment: "/api/increment",
   Decrement: "/api/decrement",
+  OnPostCreate: "/internal/menu/post-create",
+  OnAppInstall: "/internal/on-app-install",
 } as const;
 
 export type ApiEndpoint = (typeof ApiEndpoint)[keyof typeof ApiEndpoint];

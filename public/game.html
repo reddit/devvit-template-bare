@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" type="text/css" href="splash.css" />
+    <link rel="stylesheet" type="text/css" href="game.css" />
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -14,11 +14,13 @@
     <div class="content">
       <h1 class="title" id="title"></h1>
       <p class="description">
-        Edit <span class="code">src/client/splash.ts</span> to get started.
+        Edit <span class="code">src/client/game.ts</span> to get started.
       </p>
     </div>
-    <div>
-      <button class="start-button" id="start-button">Start</button>
+    <div class="counter-row">
+      <button class="counter-button" id="decrement-button">-</button>
+      <span class="counter-value" id="counter-value">0</span>
+      <button class="counter-button" id="increment-button">+</button>
     </div>
     <footer class="footer">
       <div class="docs-link" tabindex="0" id="docs-link">Docs</div>
@@ -27,6 +29,6 @@
       <span class="divider">|</span>
       <div class="docs-link" tabindex="0" id="discord-link">Discord</div>
     </footer>
-    <script type="module" src="splash.ts" defer></script>
+    <script type="module" src="game.js" defer></script>
   </body>
 </html>

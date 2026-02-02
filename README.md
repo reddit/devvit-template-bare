@@ -3,7 +3,7 @@
 A starter to build web applications on Reddit's developer platform
 
 - [Devvit](https://developers.reddit.com/): A way to build and deploy immersive games on Reddit
-- [Typescript](https://www.typescriptlang.org/): For type safety
+- [TypeScript](https://www.typescriptlang.org/): For type safety
 
 ## Getting Started
 
@@ -20,4 +20,4 @@ A starter to build web applications on Reddit's developer platform
 - `npm run deploy`: Uploads a new version of your app
 - `npm run launch`: Publishes your app for review
 - `npm run login`: Logs your CLI into Reddit
-- `npm run check`: Type checks, lints, and prettifies your app
+- `npm run type-check`: Type checks, lints, and prettifies your app
