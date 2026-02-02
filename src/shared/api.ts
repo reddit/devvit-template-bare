@@ -21,6 +21,10 @@ export type DecrementResponse = {
   count: number;
 };
 
+export type DecrementRequest = {
+  amount: number;
+};
+
 export const ApiEndpoint = {
   Init: "/api/init",
   Increment: "/api/increment",

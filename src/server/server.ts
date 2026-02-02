@@ -7,6 +7,7 @@ import type {
 } from "@devvit/web/shared";
 import {
   ApiEndpoint,
+  type DecrementRequest,
   type DecrementResponse,
   type IncrementRequest,
   type IncrementResponse,
@@ -47,7 +48,7 @@ async function onRequest(
       body = await onIncrement(req);
       break;
     case ApiEndpoint.Decrement:
-      body = await onDecrement();
+      body = await onDecrement(req);
       break;
     case ApiEndpoint.OnPostCreate:
       body = await onMenuNewPost();
@@ -107,9 +108,16 @@ async function onIncrement(req: IncomingMessage): Promise<IncrementResponse> {
   };
 }
 
-async function onDecrement(): Promise<DecrementResponse> {
+async function onDecrement(req: IncomingMessage): Promise<DecrementResponse> {
   const postId = getPostId();
-  const count = Number(await redis.incrBy(getPostCountKey(postId), -1));
+  const { amount } = await readJSON<DecrementRequest>(req).catch(() => ({
+    amount: 1,
+  }));
+  const parsedAmount = typeof amount === "number" ? amount : Number(amount);
+  const decrementBy = Number.isFinite(parsedAmount) ? parsedAmount : 1;
+  const count = Number(
+    await redis.incrBy(getPostCountKey(postId), -decrementBy),
+  );
   return {
     type: "decrement",
     postId,

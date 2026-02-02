@@ -1,5 +1,6 @@
 import {
   ApiEndpoint,
+  type DecrementRequest,
   type DecrementResponse,
   type IncrementRequest,
   type IncrementResponse,
@@ -37,6 +38,7 @@ const titleElement = document.getElementById("title") as HTMLHeadingElement;
 
 let currentPostId: string | null = null;
 const incrementAmount = 1;
+const decrementAmount = 1;
 
 async function fetchInitialCount() {
   try {
@@ -66,11 +68,10 @@ async function updateCounter(action: "increment" | "decrement", amount = 1) {
     return;
   }
 
-  const incrementBody: IncrementRequest = { amount };
   const body =
     action === "increment"
-      ? JSON.stringify(incrementBody)
-      : JSON.stringify({});
+      ? JSON.stringify({ amount } satisfies IncrementRequest)
+      : JSON.stringify({ amount } satisfies DecrementRequest);
   try {
     const response = await fetch(
       action === "increment" ? ApiEndpoint.Increment : ApiEndpoint.Decrement,
@@ -79,7 +80,7 @@ async function updateCounter(action: "increment" | "decrement", amount = 1) {
         headers: {
           "Content-Type": "application/json",
         },
-        // The server uses request context for post ID; increment reads amount from the body.
+        // The server uses request context for post ID; amount comes from the body.
         body,
       },
     );
@@ -99,7 +100,9 @@ async function updateCounter(action: "increment" | "decrement", amount = 1) {
 incrementButton.addEventListener("click", () =>
   updateCounter("increment", incrementAmount),
 );
-decrementButton.addEventListener("click", () => updateCounter("decrement"));
+decrementButton.addEventListener("click", () =>
+  updateCounter("decrement", decrementAmount),
+);
 
 // Fetch the initial count when the page loads
 fetchInitialCount();
