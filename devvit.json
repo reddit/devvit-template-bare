@@ -15,7 +15,7 @@
   },
   "server": {
     "dir": "dist/server",
-    "entry": "index.cjs"
+    "entry": "index.js"
   },
   "menu": {
     "items": [
@@ -34,5 +34,7 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build"
+    "dev": "node --experimental-strip-types  tools/build.ts --watch",
+    "build": "node --experimental-strip-types tools/build.ts -- --minify"
   }
 }
