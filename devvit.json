@@ -3,6 +3,7 @@
   "name": "<% name %>",
   "post": {
     "dir": "dist/client",
+    "dir": "public",
     "entrypoints": {
       "default": {
         "inline": true,
