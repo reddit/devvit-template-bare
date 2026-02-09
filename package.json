@@ -5,7 +5,7 @@
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "build": "./tools/build.ts --minify",
+    "build": "node --experimental-strip-types ./tools/build.ts --minify",
     "deploy": "npm run build && devvit upload",
     "dev": "devvit playtest",
     "login": "devvit login",
