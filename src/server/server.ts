@@ -32,12 +32,14 @@ async function onRequest(
   req: IncomingMessage,
   rsp: ServerResponse,
 ): Promise<void> {
-  const endpoint = req.url?.slice(1) as ApiEndpoint | undefined;
+  const url = req.url;
 
-  if (!endpoint) {
+  if (!url || url === "/") {
     writeJSON<ErrorResponse>(404, { error: "not found", status: 404 }, rsp);
     return;
   }
+
+  const endpoint = url as ApiEndpoint;
 
   let body: ApiResponse | UiResponse | ErrorResponse;
   switch (endpoint) {
