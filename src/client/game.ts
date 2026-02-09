@@ -1,18 +1,21 @@
 import {
-  IncrementResponse,
-  DecrementResponse,
-  InitResponse,
-} from "../../shared/types/api";
+  ApiEndpoint,
+  type DecrementRequest,
+  type DecrementResponse,
+  type IncrementRequest,
+  type IncrementResponse,
+  type InitResponse,
+} from "../shared/api.ts";
 import { navigateTo } from "@devvit/web/client";
 
 const counterValueElement = document.getElementById(
-  "counter-value"
+  "counter-value",
 ) as HTMLSpanElement;
 const incrementButton = document.getElementById(
-  "increment-button"
+  "increment-button",
 ) as HTMLButtonElement;
 const decrementButton = document.getElementById(
-  "decrement-button"
+  "decrement-button",
 ) as HTMLButtonElement;
 
 const docsLink = document.getElementById("docs-link") as HTMLDivElement;
@@ -34,10 +37,12 @@ discordLink.addEventListener("click", () => {
 const titleElement = document.getElementById("title") as HTMLHeadingElement;
 
 let currentPostId: string | null = null;
+const incrementAmount = 1;
+const decrementAmount = 1;
 
 async function fetchInitialCount() {
   try {
-    const response = await fetch("/api/init");
+    const response = await fetch(ApiEndpoint.Init);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -47,7 +52,7 @@ async function fetchInitialCount() {
       currentPostId = data.postId; // Store postId for later use
       titleElement.textContent = `Hey ${data.username} 👋`;
     } else {
-      console.error("Invalid response type from /api/init", data);
+      console.error(`Invalid response type from ${ApiEndpoint.Init}`, data);
       counterValueElement.textContent = "Error";
     }
   } catch (error) {
@@ -56,23 +61,29 @@ async function fetchInitialCount() {
   }
 }
 
-async function updateCounter(action: "increment" | "decrement") {
+async function updateCounter(action: "increment" | "decrement", amount = 1) {
   if (!currentPostId) {
     console.error("Cannot update counter: postId is not initialized.");
     // Optionally, you could try to re-initialize or show an error to the user.
     return;
   }
 
+  const body =
+    action === "increment"
+      ? JSON.stringify({ amount } satisfies IncrementRequest)
+      : JSON.stringify({ amount } satisfies DecrementRequest);
   try {
-    const response = await fetch(`/api/${action}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      action === "increment" ? ApiEndpoint.Increment : ApiEndpoint.Decrement,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // The server uses request context for post ID; amount comes from the body.
+        body,
       },
-      // The body can be an empty JSON object or include the postId if your backend expects it,
-      // but based on your server code, postId is taken from req.devvit.
-      body: JSON.stringify({}),
-    });
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -86,8 +97,12 @@ async function updateCounter(action: "increment" | "decrement") {
   }
 }
 
-incrementButton.addEventListener("click", () => updateCounter("increment"));
-decrementButton.addEventListener("click", () => updateCounter("decrement"));
+incrementButton.addEventListener("click", () =>
+  updateCounter("increment", incrementAmount),
+);
+decrementButton.addEventListener("click", () =>
+  updateCounter("decrement", decrementAmount),
+);
 
 // Fetch the initial count when the page loads
 fetchInitialCount();

@@ -1,44 +1,57 @@
-// TypeScript config defaults for each sub-project (src, test, etc).
 {
   "$schema": "https://json.schemastore.org/tsconfig.json",
-
   "compilerOptions": {
     // Enable incremental builds.
     "composite": true,
 
+    // Enable type-stripping.
+    "allowImportingTsExtensions": true,
+
+    // Only allow type-strippable syntax.
+    "erasableSyntaxOnly": true,
+
     // Maximize type checking.
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "noUncheckedSideEffectImports": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "resolveJsonModule": true,
     "strict": true,
 
-    "types": [], // Projects add types needed.
+    // Projects add types needed.
+    "lib": ["ES2023"],
+    "types": [],
+
+    "isolatedDeclarations": true, // Require explicit types.
 
     // Improve compatibility with compilers that aren't type system aware.
     "isolatedModules": true,
 
-    // Use ESM.
-    "esModuleInterop": true,
+    "esModuleInterop": true, // Use ESM.
 
     // Allow JSON type-checking and imports.
     "module": "ESNext",
     "moduleResolution": "Bundler",
+
+    "rewriteRelativeImportExtensions": true, // Rewrite .ts imports to .js.
+
+    // All subprojects output to dist/ relative the project root.
+    "outDir": "../dist",
+    "rootDir": "..",
 
     // Assume library types are checked and compatible.
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
 
     "sourceMap": true,
+    "declarationMap": true, // Map back to original sources, not .d.ts.
 
-    "target": "ES2022"
-  },
-  // https://github.com/microsoft/TypeScript/wiki/Performance#misconfigured-include-and-exclude
-  "exclude": ["dist", "node_modules", ".*/"]
+    "target": "ES2023",
+
+    // Don't transform type-only imports.
+    "verbatimModuleSyntax": true
+  }
 }

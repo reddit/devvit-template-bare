@@ -2,7 +2,7 @@
   "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
   "name": "<% name %>",
   "post": {
-    "dir": "dist/client",
+    "dir": "public",
     "entrypoints": {
       "default": {
         "inline": true,
@@ -13,12 +13,9 @@
       }
     }
   },
-  "media": {
-    "dir": "assets"
-  },
   "server": {
     "dir": "dist/server",
-    "entry": "index.cjs"
+    "entry": "index.js"
   },
   "menu": {
     "items": [
@@ -33,5 +30,9 @@
   },
   "triggers": {
     "onAppInstall": "/internal/on-app-install"
+  },
+  "scripts": {
+    "dev": "./tools/build.ts --watch",
+    "build": "./tools/build.ts --minify"
   }
 }
