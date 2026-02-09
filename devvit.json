@@ -32,9 +32,7 @@
     "onAppInstall": "/internal/on-app-install"
   },
   "scripts": {
-    "dev": "vite build --watch",
-    "build": "vite build"
-    "dev": "node --experimental-strip-types  tools/build.ts --watch",
-    "build": "node --experimental-strip-types tools/build.ts -- --minify"
+    "dev": "./tools/build.ts --watch",
+    "build": "./tools/build.ts --minify"
   }
 }

@@ -1,3 +1,5 @@
+#!/usr/bin/env -S node --experimental-strip-types
+
 // Bundles sources to dist/ and public/.
 //
 // build.ts [--minify] [--watch]
