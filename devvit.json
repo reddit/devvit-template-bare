@@ -32,7 +32,7 @@
     "onAppInstall": "/internal/on-app-install"
   },
   "scripts": {
-    "dev": "node ./tools/build.ts --watch",
-    "build": "node ./tools/build.ts --minify"
+    "dev": "node --experimental-strip-types ./tools/build.ts --watch",
+    "build": "node --experimental-strip-types ./tools/build.ts --minify"
   }
 }
