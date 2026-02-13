@@ -5,7 +5,7 @@
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "build": "node ./tools/build.ts --minify",
+    "build": "node --experimental-strip-types ./tools/build.ts --minify",
     "deploy": "npm run build && devvit upload",
     "dev": "devvit playtest",
     "login": "devvit login",
@@ -13,7 +13,7 @@
     "type-check": "tsc --build"
   },
   "engines": {
-    "node": ">=22.18.0"
+    "node": ">=22.6.0"
   },
   "dependencies": {
     "@devvit/web": "0.12.12",
