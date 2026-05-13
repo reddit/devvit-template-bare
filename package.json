@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@devvit/web": "0.12.12",
-    "devvit": "0.12.12"
+    "devvit": "0.12.23"
   },
   "devDependencies": {
     "@types/node": "22.12.0",
