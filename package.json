@@ -16,8 +16,8 @@
     "node": ">=22.6.0"
   },
   "dependencies": {
-    "@devvit/web": "0.13.0",
-    "devvit": "0.13.0"
+    "@devvit/web": "0.13.6",
+    "devvit": "0.13.6"
   },
   "devDependencies": {
     "@types/node": "22.20.0",
