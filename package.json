@@ -5,23 +5,28 @@
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "build": "node --experimental-strip-types ./tools/build.ts --minify",
-    "deploy": "npm run build && devvit upload",
-    "dev": "devvit playtest",
-    "login": "devvit login",
-    "launch": "npm run build && npm run deploy && devvit publish",
-    "type-check": "tsc --build"
-  },
-  "engines": {
-    "node": ">=22.6.0"
-  },
-  "dependencies": {
-    "@devvit/web": "0.13.0",
-    "devvit": "0.13.0"
+    "build": "npm run build:client -- --metafile=dist/client.meta.json --minify && npm run build:server -- --metafile=dist/server.meta.json --minify",
+    "build:client": "esbuild --bundle --log-level=warning --sourcemap=linked --target=es2023 --format=esm --outdir=public --platform=browser src/client/splash.ts src/client/game.ts",
+    "build:server": "esbuild --bundle --log-level=warning --sourcemap=linked --target=es2023 --format=cjs --outdir=dist/server --platform=node src/server/index.ts",
+    "clean": "rm -rf dist/ public/*.js*",
+    "format": "npm run lint -- --fix",
+    "lint": "biome check --error-on-warnings",
+    "playtest": "devvit playtest",
+    "test": "npm run test:types && npm run lint && npm run test:unit && npm run build",
+    "test:types": "tsc --build",
+    "test:unit": "node --experimental-strip-types --no-warnings=ExperimentalWarning --test src/**/*.test.ts",
+    "publish": "npm run clean && npm run build && devvit publish",
+    "watch": "sh -c 'trap \"kill 0\" exit; npm run build:client -- --watch=forever& npm run build:server -- --watch=forever& wait' --"
   },
   "devDependencies": {
-    "@types/node": "22.20.0",
-    "typescript": "6.0.3",
-    "esbuild": "0.28.1"
+    "@biomejs/biome": "2.5.1",
+    "@devvit/web": "0.13.5",
+    "@types/node": "22.6.2",
+    "devvit": "0.13.5",
+    "esbuild": "0.28.1",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=22.6"
   }
 }
