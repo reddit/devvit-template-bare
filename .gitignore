@@ -1,6 +1,4 @@
-node_modules
-.DS_Store
-dist
-.env
-public/*.js
-public/*.js.map
+/node_modules/
+/dist/
+/public/*.js*
+/.env

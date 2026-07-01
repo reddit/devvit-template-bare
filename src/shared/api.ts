@@ -1,36 +1,24 @@
-export type InitResponse = {
-  type: "init";
-  postId: string;
-  count: number;
-  username: string;
-};
+/** Generic error detail for all responses. */
+export type ErrorRsp = {error: string; status: number}
 
-export type IncrementResponse = {
-  type: "increment";
-  postId: string;
-  count: number;
-};
+/** The current counter state for this post. */
+export type GetCounterRsp = {count: number}
 
-export type IncrementRequest = {
-  amount: number;
-};
+/** Increment the post counter by a signed amount. */
+export type IncCounterReq = {amount: number}
+export type IncCounterRsp = {count: number}
 
-export type DecrementResponse = {
-  type: "decrement";
-  postId: string;
-  count: number;
-};
+export type Endpoint = (typeof Endpoint)[keyof typeof Endpoint]
+export const Endpoint = {
+  GetCounter: 'api/counter',
+  IncCounter: 'api/counter/inc',
+  OnAppInstall: 'internal/on/app/install',
+  OnMenuNewPost: 'internal/on/menu/new-post',
+} as const
 
-export type DecrementRequest = {
-  amount: number;
-};
-
-export const ApiEndpoint = {
-  Init: "/api/init",
-  Increment: "/api/increment",
-  Decrement: "/api/decrement",
-  OnPostCreate: "/internal/menu/post-create",
-  OnAppInstall: "/internal/on-app-install",
-} as const;
-
-export type ApiEndpoint = (typeof ApiEndpoint)[keyof typeof ApiEndpoint];
+export const EndpointMethod = {
+  [Endpoint.GetCounter]: 'GET',
+  [Endpoint.IncCounter]: 'POST',
+  [Endpoint.OnAppInstall]: 'POST',
+  [Endpoint.OnMenuNewPost]: 'POST',
+} as const satisfies {[endpoint: string]: 'GET' | 'POST'}
