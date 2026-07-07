@@ -19,11 +19,12 @@ jobs:
           node-version: 22.6.0
       - name: Install Dependencies
         run: npm install --no-fund
-      - name: Typecheck
-        run: npm run test:types
-      - name: Lint
-        run: npm run lint
-      - name: Unit Test
-        run: npm run test:unit
-      - name: Build
-        run: npm run build
+      - parallel:
+          - name: Typecheck
+            run: npm run test:types
+          - name: Lint
+            run: npm run lint
+          - name: Unit Test
+            run: npm run test:unit
+          - name: Build
+            run: npm run build
