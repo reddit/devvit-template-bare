@@ -1,8 +1,9 @@
-import { createServer, getServerPort } from "@devvit/web/server";
-import { serverOnRequest } from "./server.ts";
+#!/usr/bin/env -S node --experimental-strip-types --no-warnings=ExperimentalWarning
+import {createServer, getServerPort} from '@devvit/web/server'
+import {onReq} from './server.ts'
 
-const server = createServer(serverOnRequest);
-const port: number = getServerPort();
+const server = createServer(onReq)
+const port: number = getServerPort()
 
-server.on("error", (err) => console.error(`server error; ${err.stack}`));
-server.listen(port);
+server.on('error', err => console.error(`server error; ${err.stack}`))
+server.listen(port, () => console.log(`http://localhost:${port}`))

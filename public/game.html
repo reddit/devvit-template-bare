@@ -1,34 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" type="text/css" href="game.css" />
-    <meta charset="UTF-8" />
+    <meta charset="utf-8">
     <meta
       name="viewport"
-      content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height, user-scalable=0"
-    />
-    <title>devvit</title>
+      content="width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no"
+    >
+    <title>Game</title>
+    <link rel="modulepreload" href="game.js">
+    <style>
+    body {
+      margin: 0;
+      width: 100dvw;
+      height: 100dvh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    main {
+      display: grid;
+      gap: 1rem;
+      justify-items: center;
+    }
+    </style>
   </head>
-  <body class="app">
-    <img class="snoo" src="/snoo.png" alt="Snoo" />
-    <div class="content">
-      <h1 class="title" id="title"></h1>
-      <p class="description">
-        Edit <span class="code">src/client/game.ts</span> to get started.
-      </p>
-    </div>
-    <div class="counter-row">
-      <button class="counter-button" id="decrement-button">-</button>
-      <span class="counter-value" id="counter-value">0</span>
-      <button class="counter-button" id="increment-button">+</button>
-    </div>
-    <footer class="footer">
-      <div class="docs-link" tabindex="0" id="docs-link">Docs</div>
-      <span class="divider">|</span>
-      <div class="docs-link" tabindex="0" id="playtest-link">r/Devvit</div>
-      <span class="divider">|</span>
-      <div class="docs-link" tabindex="0" id="discord-link">Discord</div>
-    </footer>
-    <script type="module" src="game.js" defer></script>
+  <body>
+    <main>
+      <div class="counter">
+        <button id="dec-btn" type="button">-</button>
+        <output id="counter">0</output>
+        <button id="inc-btn" type="button">+</button>
+      </div>
+    </main>
+    <script src="game.js" type="module"></script>
   </body>
 </html>

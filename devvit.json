@@ -2,10 +2,8 @@
   "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
   "name": "<% name %>",
   "post": {
-    "dir": "public",
     "entrypoints": {
       "default": {
-        "inline": true,
         "entry": "splash.html"
       },
       "game": {
@@ -13,26 +11,21 @@
       }
     }
   },
-  "server": {
-    "dir": "dist/server",
-    "entry": "index.js"
-  },
+  "server": {},
   "menu": {
     "items": [
       {
-        "label": "Create a new post",
-        "description": "<% name %>",
+        "label": "[<% name %>] New Post",
+        "description": "Create a new <% name %> post.",
         "location": "subreddit",
-        "forUserType": "moderator",
-        "endpoint": "/internal/menu/post-create"
+        "endpoint": "/internal/on/menu/new-post"
       }
     ]
   },
   "triggers": {
-    "onAppInstall": "/internal/on-app-install"
+    "onAppInstall": "/internal/on/app/install"
   },
   "scripts": {
-    "dev": "node --experimental-strip-types ./tools/build.ts --watch",
-    "build": "node --experimental-strip-types ./tools/build.ts --minify"
+    "dev": "npm run watch"
   }
 }

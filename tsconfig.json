@@ -1,8 +1,10 @@
 {
+  // Only build references.
   "files": [],
   "references": [
-    { "path": "./tools/tsconfig.client.json" },
-    { "path": "./tools/tsconfig.server.json" },
-    { "path": "./tools/tsconfig.shared.json" }
+    {"path": "./src/client/"},
+    {"path": "./src/server/"},
+    {"path": "./src/shared/"},
+    {"path": "./src/test/"}
   ]
 }

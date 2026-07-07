@@ -1,0 +1,9 @@
+// TypeScript config for all client code.
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["DOM", "ES2023"],
+    "customConditions": ["browser"]
+  },
+  "references": [{"path": "../shared/"}]
+}
