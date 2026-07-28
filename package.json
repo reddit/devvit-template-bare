@@ -24,7 +24,7 @@
     "@types/node": "22.20.1",
     "devvit": "0.13.9",
     "esbuild": "0.28.1",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   },
   "engines": {
     "node": ">=22.6"
