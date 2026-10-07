@@ -19,7 +19,7 @@
     "watch": "sh -c 'trap \"kill 0\" exit; npm run build:client -- --watch=forever& npm run build:server -- --watch=forever& wait' --"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.14",
+    "@biomejs/biome": "2.5.15",
     "@devvit/web": "0.14.7",
     "@types/node": "24.19.0",
     "devvit": "0.14.7",
