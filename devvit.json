@@ -15,8 +15,8 @@
   "menu": {
     "items": [
       {
-        "label": "[<% name %>] New Post",
-        "description": "Create a new <% name %> post.",
+        "label": "New Post",
+        "description": "Create a new post.",
         "location": "subreddit",
         "endpoint": "/internal/on/menu/new-post"
       }
@@ -26,6 +26,7 @@
     "onAppInstall": "/internal/on/app/install"
   },
   "scripts": {
+    "build": "npm run build",
     "dev": "npm run watch"
   }
 }

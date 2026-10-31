@@ -29,7 +29,7 @@ before(async () => {
   server = createServer(async (req, rsp) => {
     await runWithContext(
       {
-        appName: '<% name %>',
+        appSlug: 'test-app',
         postId: 't3_123',
         userId: 't2_123',
         username: 'username',
