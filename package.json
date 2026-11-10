@@ -20,9 +20,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",
-    "@devvit/web": "0.15.2",
+    "@devvit/web": "0.15.3",
     "@types/node": "24.19.2",
-    "devvit": "0.15.2",
+    "devvit": "0.15.3",
     "esbuild": "0.28.2",
     "typescript": "7.0.2"
   },
